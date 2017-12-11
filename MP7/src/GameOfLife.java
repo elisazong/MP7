@@ -1,6 +1,8 @@
 import java.util.Scanner;
+import java.awt.*;
+import javax.swing.*;
 
-public class LifeOfGame {
+public class GameOfLife {
 	
 	public static Board createBoard() {
         System.out.print("How many rows will you have? (6-30): ");
@@ -91,25 +93,51 @@ public class LifeOfGame {
 		}
 	}
 	
-	public static void printBoard(Board user) {
+	public static void printBoard(Board user, JPanel[][] panel) {
 		for (int i = 0; i < user.row; i++) {
 			for (int j = 0; j < user.column; j++) {
 				if (user.board[i][j] == 0) {
-					System.out.print("- ");
+					panel[i][j].setBackground(Color.CYAN);;
 				} else {
-					System.out.print("* ");
+					panel[i][j].setBackground(Color.RED);;
 				}
 			}
-			System.out.println();
 		}
 	}
-
+	
 	public static void main(String[] args) {
+		
 		Board user = createBoard();
+		JFrame frame = new JFrame("Game of Life");
+		JPanel[][] panel = new JPanel[user.row][user.column];
+		
+		JPanel panel1 = new JPanel();
+		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+		frame.getContentPane().add(panel1, BorderLayout.CENTER);
+		panel1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panel1.setBackground(Color.DARK_GRAY);
+		
+		JPanel panel1_1 = new JPanel();
+		frame.getContentPane().add(panel1_1, BorderLayout.CENTER);
+		panel1_1.setLayout(new GridLayout(user.row, user.column, 10, 10));
+		
+		for (int i = 0; i < user.row; i++) {
+			for (int j = 0; j < user.column; j++) {
+				panel[i][j] = new JPanel();
+				panel[i][j].setBackground(Color.WHITE);
+				panel1_1.add(panel[i][j]);
+			}
+		}		
+		frame.setLocation(500, 500);
+		frame.setSize(500, 500);
+		
+		frame.setVisible(true);
+		
+		
 		while (true) {
 			System.out.println();
 			runGame(user);
-			printBoard(user);
+			printBoard(user, panel);
 			try {
 				  Thread.sleep(500);
 				} catch (InterruptedException ex) {
