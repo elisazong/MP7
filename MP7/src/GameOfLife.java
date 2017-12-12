@@ -5,17 +5,17 @@ import javax.swing.*;
 public class GameOfLife {
 	
 	public static Board createBoard() {
-        System.out.print("How many rows will you have? (6-30): ");
+        System.out.print("How many rows will you have? (20-50): ");
         Scanner scanner = new Scanner(System.in);
         int row = scanner.nextInt();
-        while (row > 30 || row < 6) {
-            System.out.print("Sorry. The number of rows must be between 6 and 30: ");
+        while (row > 50 || row < 20) {
+            System.out.print("Sorry. The number of rows must be between 20 and 50: ");
             row = scanner.nextInt();
         }
-        System.out.print("How many columns will you have? (10-50): ");
+        System.out.print("How many columns will you have? (20-50): ");
         int column = scanner.nextInt();
-        while (column > 50 || column < 10) {
-            System.out.print("Sorry. The number of rows must be between 10 and 50: ");
+        while (column > 50 || column < 20) {
+            System.out.print("Sorry. The number of rows must be between 20 and 50: ");
             column = scanner.nextInt();
         }
         scanner.close();
@@ -97,9 +97,9 @@ public class GameOfLife {
 		for (int i = 0; i < user.row; i++) {
 			for (int j = 0; j < user.column; j++) {
 				if (user.board[i][j] == 0) {
-					panel[i][j].setBackground(Color.CYAN);;
+					panel[i][j].setBackground(Color.ORANGE);
 				} else {
-					panel[i][j].setBackground(Color.RED);;
+					panel[i][j].setBackground(Color.RED);
 				}
 			}
 		}
@@ -119,7 +119,7 @@ public class GameOfLife {
 		
 		JPanel panel1_1 = new JPanel();
 		frame.getContentPane().add(panel1_1, BorderLayout.CENTER);
-		panel1_1.setLayout(new GridLayout(user.row, user.column, 10, 10));
+		panel1_1.setLayout(new GridLayout(user.row, user.column, 3, 3));
 		
 		for (int i = 0; i < user.row; i++) {
 			for (int j = 0; j < user.column; j++) {
@@ -127,9 +127,12 @@ public class GameOfLife {
 				panel[i][j].setBackground(Color.WHITE);
 				panel1_1.add(panel[i][j]);
 			}
-		}		
-		frame.setLocation(500, 500);
-		frame.setSize(500, 500);
+		}
+		
+		frame.setSize(user.column * 15, user.row * 15);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
+
 		
 		frame.setVisible(true);
 		
